@@ -22,6 +22,7 @@ Everything renders live in the browser with three.js, built from simple shapes. 
 | 8 | [Warren](https://claude.ai/artifact/K8tvJRRJCX1J5nCMayj9ke) | Side-on bunker builder, smaller scope | `games/warren.js` |
 | 9 | [Marshlight](https://claude.ai/artifact/H333shLL2kYX3ZquNK9xNf) | Canoe mystery in misty marsh channels | `games/marshlight.js` |
 | 10 | [Burger Joint](https://claude.ai/artifact/TFYubUezp4hQtPQCeH13Fn) | Beach burger shack, stack every order | `games/burger.js` |
+| 11 | [Fathom Nook](https://claude.ai/artifact/CJSLYXeUxKuV3EsoujBgaT) | Cosy underwater exploration, reef lamps bring the colour back | `games/fathom.js` |
 
 ## What's in here
 
@@ -88,3 +89,4 @@ These came up while building the ten boards. The boards work around them, so the
 - In greyscale mode, kit colours close to the accent hue (wood and mustard next to amber, brick next to red) keep their colour. Build greyscale boards from greys only.
 - Big walls seen side-on can pick up stray ink scribbles. A steeper camera pitch fixes it.
 - Below 640px wide, the key art switches to 4:3.
+- `shot.mjs` needs three.js offline if the CDN is blocked: `npm pack three@0.160.0`, unpack it to `vendor/three`.
