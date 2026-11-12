@@ -56,3 +56,4 @@ export default {
 8. **Warren** (`warren`) — side-on cutaway bunker builder under a family house; cosy-apocalypse.
 9. **Marshlight** (`marshlight`) — canoe mystery in misty marsh channels, lantern light, Firewatch-style chapters.
 10. **Burger Joint** (`burger`) — beach burger shack; stack every order by hand, layer by layer.
+11. **Fathom Nook** (`fathom`, added later) — cosy underwater exploration; a sea-floor cabin, reef lamps that bring the colour back, a sketchbook. Underwater recipe: warm colours on owned things, cool gradient background, far layers as flat unlit silhouettes behind see-through haze cards, pale sun shafts, lamp pools on the sand.

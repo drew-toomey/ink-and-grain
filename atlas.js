@@ -1,4 +1,4 @@
-// atlas.js — the overview page: house style, the ten games (live key-art thumbnails), and the evidence.
+// atlas.js — the overview page: house style, the games (live key-art thumbnails), and the evidence.
 import * as K from './kit.js';
 import tide from './games/tide.js';
 import barge from './games/barge.js';
@@ -10,9 +10,10 @@ import nightwatch from './games/nightwatch.js';
 import warren from './games/warren.js';
 import marshlight from './games/marshlight.js';
 import burger from './games/burger.js';
+import fathom from './games/fathom.js';
 const { P, grp, box, cyl, cone, extrude, tube, torus, tex, texMat, deg } = K;
 
-const GAMES = [tide, barge, lost, railway, snowline, pall, nightwatch, warren, marshlight, burger];
+const GAMES = [tide, barge, lost, railway, snowline, pall, nightwatch, warren, marshlight, burger, fathom];
 const URLS = window.BOARD_URLS || {};
 
 const CSS = String.raw`
@@ -136,14 +137,14 @@ export async function renderAtlas() {
     h('div', {},
       h('div', { class: 'eyebrow' }, 'House style · working name'),
       h('h1', {}, 'Ink & ', h('span', {}, 'Grain')),
-      h('p', { class: 'lede' }, 'Ten game ideas that would suit the kite-shop art style. Each one has a project board with characters, buildings, vehicles and environments, all rendered live in the same style.'),
+      h('p', { class: 'lede' }, 'Eleven game ideas that would suit the kite-shop art style. Each one has a project board with characters, buildings, vehicles and environments, all rendered live in the same style.'),
       h('ul', { class: 'refs' }, ['Paralives', 'Tiny Bookshop', 'Chef Knight'].map((r) => h('li', {}, r)))),
     h('div', { class: 'frame' }, benchCv, h('span', { class: 'pill' }, 'Your kite bench, rebuilt in the shared kit'))));
 
   // rules
   const rule = (b, s, sw) => h('li', {}, h('b', {}, b), h('span', {}, s), sw ? h('div', { class: 'sw' }, sw.map((c) => h('i', { style: `background:${c}` }))) : null);
   wrap.append(h('section', { class: 'sec' },
-    h('header', {}, h('h2', {}, 'The style in five rules'), h('p', {}, 'These are the settings every board uses, so the ten games look like one studio made them.')),
+    h('header', {}, h('h2', {}, 'The style in five rules'), h('p', {}, 'These are the settings every board uses, so all the games look like one studio made them.')),
     h('ol', { class: 'rules' },
       rule('Chunky shapes', 'Low-poly, rounded, toy-like proportions. Big heads, short legs, fat props.'),
       rule('Three-tone toon', 'Lit, mid and shadow bands only. Shadows stay warm rather than grey.'),
@@ -166,12 +167,12 @@ export async function renderAtlas() {
     const mono = G.mode?.mono ? { mono: true, accent: G.mode.accent, accentTol: G.mode.tol ?? 0.33, ink: G.mode.ink ?? '#1d1c1b' } : {};
     jobs.push({ cv, build: G.key.build, stage: { ...mono, bg: G.key.bg ?? G.theme?.cardBg ?? P.cream, light: G.key.light, sun: G.key.sun }, cam: Object.assign({ yaw: -34, pitch: 30, fov: 26 }, G.key.cam) });
   });
-  wrap.append(h('section', { class: 'sec' }, h('header', {}, h('h2', {}, 'The ten games'), h('p', {}, 'Drag any picture to turn it. Each board opens in its own page.')), grid));
+  wrap.append(h('section', { class: 'sec' }, h('header', {}, h('h2', {}, 'The eleven games'), h('p', {}, 'Drag any picture to turn it. Each board opens in its own page.')), grid));
 
   // evidence
   const fact = (b, s, small) => h('li', {}, h('b', {}, b), h('span', {}, s), small ? h('small', {}, small) : null);
   wrap.append(h('section', { class: 'sec' },
-    h('header', {}, h('h2', {}, 'Why these ten'), h('p', {}, 'Picked from what you keep building and playing, then checked against what is working on Steam.')),
+    h('header', {}, h('h2', {}, 'Why these'), h('p', {}, 'Picked from what you keep building and playing, then checked against what is working on Steam.')),
     h('div', { class: 'two' },
       h('div', { class: 'panel' }, h('h3', {}, 'From your sessions'),
         h('ul', { class: 'facts' },
@@ -196,6 +197,7 @@ export async function renderAtlas() {
     ['Restoration / colour returns', 'Pall', 'PowerWash Simulator, GRIS', 'Steam added Cleaning and Organizing tags in May 2026'],
     ['Cutaway colony', 'Warren', 'Fallout Shelter', 'Proven format, few cosy takes'],
     ['Narrative mystery', 'Marshlight', 'Firewatch, Duck Detective', 'Steady; short games do well'],
+    ['Cosy exploration', 'Fathom Nook', 'Subnautica, ABZÛ, DAVE THE DIVER', 'Added 12 Nov 2026 at your request; market not checked yet'],
     ['Cooking', 'Burger Joint', 'PlateUp!, Chef Knight', 'Middling: 7.9% hit rate, needs a hook'],
   ];
   wrap.append(h('section', { class: 'sec' }, h('header', {}, h('h2', {}, 'Genre fit at a glance')),
