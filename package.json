@@ -1,0 +1,15 @@
+{
+  "name": "ink-and-grain",
+  "private": true,
+  "type": "module",
+  "description": "House toon art style kit and project boards for the kite-shop family of games",
+  "scripts": {
+    "serve": "npx --yes serve@14.2.4 -l 5173 .",
+    "build": "node build.mjs",
+    "build:atlas": "node build-atlas.mjs",
+    "shot": "node shot.mjs"
+  },
+  "devDependencies": {
+    "esbuild": "0.24.0"
+  }
+}

@@ -1,0 +1,12 @@
+<title>Board dev</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600;700&family=DM+Mono&display=swap">
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
+<script type="module">
+// dev harness: dev.html?g=tide&n=1
+import { renderBoard } from './board.js';
+const q = new URLSearchParams(location.search);
+const G = (await import(`./games/${q.get('g') || 'tide'}.js`)).default;
+document.title = G.title;
+renderBoard(G, { n: +(q.get('n') || 1) });
+</script>

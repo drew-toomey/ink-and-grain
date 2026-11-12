@@ -1,0 +1,71 @@
+<title>Calibration</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&display=swap">
+<style>body{background:#f4ead6;margin:0;display:grid;grid-template-columns:repeat(2,640px);gap:8px;padding:8px} canvas{width:640px;height:360px;display:block;background:#ddd}</style>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
+<canvas id="a"></canvas><canvas id="b"></canvas><canvas id="c"></canvas><canvas id="d"></canvas>
+<script type="module">
+import * as K from './kit.js';
+const { P, grp, box, rbox, cyl, cone, sph, extrude, tube, tex, texMat, deg } = K;
+await document.fonts.ready;
+const S = new K.Studio();
+// --- workbench recreation
+function bench() {
+  const g = grp();
+  g.add(box(9, 0.5, 5.2, P.wood).at(0, -0.5, 0));                       // desk
+  g.add(box(9, 3.6, 0.2, P.wall).at(0, -0.5, -2.7));                      // wall
+  g.add(box(6.5, 2.4, 0.08, texMat(tex.speckle({ base: P.cork, dots: [P.woodDk], n: 70, size: 3 }))).at(0.4, 0.5, -2.55)); // pegboard
+  g.add(box(5.6, 0.05, 3.6, texMat(tex.grid({ bg: P.mat, line: '#a9d2bb', cells: 10, lw: 2, rep: [1.5, 1] }))).at(0, 0, 0.3)); // cutting mat
+  // kite
+  const k = grp();
+  const pts = [[0, 1.0], [0.75, 0], [0, -1.6], [-0.75, 0]];
+  const quad = (a, b, c, col) => extrude([pts[a], pts[b], [0, 0]], 0.02, col);
+  k.put(quad(3, 0, 0, P.red), quad(0, 1, 0, P.blue), quad(1, 2, 0, P.white), quad(2, 3, 0, P.white));
+  k.add(box(0.06, 0.04, 2.7, P.woodLt).rot(0, 0, 0).at(0, 0.02, 0.3).rot(deg(90), 0, 0));
+  k.rot(deg(-90), 0, deg(-60)).at(0, 0.09, 0.4);
+  k.add(box(0.07, 2.65, 0.05, P.woodLt).at(0, -1.6, 0.04));
+  k.add(box(1.6, 0.07, 0.05, P.woodLt).at(-0.8, -0.03, 0.04).rot(0, 0, 0));
+  k.add(tube([[0, 0.5, 0.04], [0.2, -0.2, 0.6], [0, -0.8, 0.04]], 0.012, P.white).noInk());
+  g.add(k);
+  // paint pots
+  const pots = [P.pink, P.white, P.blue, P.green, P.red, P.mustard];
+  pots.forEach((c, i) => { const x = 3.3 + (i % 2) * 0.62, z = -1.1 + Math.floor(i / 2) * 0.62; g.add(cyl(0.26, 0.26, 0.42, P.white).at(x, 0, z), cyl(0.2, 0.2, 0.43, c).at(x, 0.0, z)); });
+  g.add(box(1.4, 0.18, 2.0, P.woodDk).at(3.6, -0.02, -0.5));
+  g.add(cyl(0.45, 0.45, 0.4, P.woodDk).at(4.0, 0, 1.4), cyl(0.36, 0.36, 0.41, P.white).at(4.0, 0, 1.4));
+  // lamp
+  g.add(cyl(0.45, 0.55, 0.2, P.red).at(-3.6, 0, -1.6), cyl(0.07, 0.07, 2.4, P.steel).at(-3.6, 0.1, -1.6).rot(deg(-12), 0, deg(8)), cone(0.7, 0.8, P.red).rot(deg(160), 0, deg(-30)).at(-3.2, 2.6, -1.3));
+  // scissors
+  g.add(grp(K.torus(0.16, 0.05, P.red).rot(deg(90), 0, 0).at(0, 0.05, 0), K.torus(0.16, 0.05, P.red).rot(deg(90), 0, 0).at(0.32, 0.05, 0.05), box(1.0, 0.04, 0.08, P.steel).at(0.8, 0.02, 0.02)).at(-4.1, 0, 0.6).rot(0, deg(-12), 0));
+  g.add(cyl(0.5, 0.5, 0.25, P.white).at(1.6, 1.85, -2.45).rot(deg(90), 0, 0), cyl(0.36, 0.36, 0.26, P.cork).at(1.6, 1.85, -2.45).rot(deg(90), 0, 0));
+  return g;
+}
+S.attach(document.getElementById('a'), bench(), { bg: P.cream }, { yaw: 0, pitch: 52, fov: 30, zoom: 1.35 });
+// --- characters
+const people = grp(
+  K.person({ hairStyle: 'bun', hair: P.hairAuburn, top: P.teal, bottom: P.navy, apron: P.mustard, pose: 'wave' }).at(-1.5, 0, 0),
+  K.person({ hairStyle: 'short', hair: P.hairBlack, skin: P.skin3, top: P.red, hat: 'cap', acc: ['glasses'], pose: 'hold', held: K.sign('KITES', { w: 0.6, h: 0.22 }) }).at(-0.5, 0, 0),
+  K.person({ body: 'kid', hairStyle: 'pigtails', hair: P.hairBlonde, top: P.pink, bottom: P.blue, skirt: true, hat: 'sou' }).at(0.4, 0, 0),
+  K.person({ body: 'round', hairStyle: 'bald', skin: P.skin2, top: P.white, bottom: P.ink2, hat: 'captain', acc: ['beard'], beardColor: P.hairWhite, pose: 'hips' }).at(1.4, 0, 0),
+  K.cat({ color: P.orange }).at(2.3, 0, 0.4), K.dog({ collar: P.red }).at(-2.4, 0, 0.4),
+);
+S.attach(document.getElementById('b'), grp(K.ground(6.4, 2.2, { top: P.sand, side: P.sandDk, h: 0.25 }), people), { bg: P.skyLt }, { yaw: -18, pitch: 14, fov: 24 });
+// --- buildings
+const town = grp(
+  K.ground(8, 4, { top: P.leaf, side: P.soil }),
+  K.house({ w: 2.2, sign: 'KITES', awning: [P.red, P.white], wall: P.wall, roof: P.blue, door: P.red, chimney: true }).at(-2.2, 0, -0.5),
+  K.house({ w: 1.6, d: 1.4, h: 1.0, floors: 2, wall: P.butter, roof: P.terracotta, roofType: 'hip', shutters: P.teal }).at(0.3, 0, -0.7),
+  K.house({ w: 1.6, d: 1.4, wall: P.white, roof: P.teal, roofType: 'flat', awning: [P.teal, P.white], sign: 'CAFE' }).at(2.5, 0, -0.6),
+  K.tree({ kind: 'round', h: 1.8 }).at(-3.5, 0, 1.2), K.tree({ kind: 'pine', h: 1.8, leaf: P.pine }).at(3.6, 0, 1.3), K.tree({ kind: 'palm', h: 2.2 }).at(1.2, 0, 1.4),
+  K.lamppost().at(-0.9, 0, 1.1), K.bench().at(-0.1, 0, 1.2), K.rock(0.35, P.stone, 4).at(3.0, 0, 1.6),
+);
+S.attach(document.getElementById('c'), town, { bg: P.skyLt }, { yaw: -28, pitch: 30 });
+// --- vehicles
+const veh = grp(
+  K.ground(8, 3.4, { top: P.stone, side: P.stoneDk }),
+  K.vehicle({ kind: 'van', body: P.teal, trim: P.white }).at(-2.4, 0, 0),
+  K.vehicle({ kind: 'boat', body: P.red, trim: P.white, mast: true }).at(0.4, 0, 0.3),
+  K.vehicle({ kind: 'cart', body: P.woodLt }).at(2.6, 0, -0.6),
+  K.vehicle({ kind: 'bike', body: P.blue, basket: P.wood }).at(2.6, 0, 1.0),
+);
+S.attach(document.getElementById('d'), veh, { bg: P.cream }, { yaw: -30, pitch: 28 });
+document.body.dataset.done = '1';
+</script>
