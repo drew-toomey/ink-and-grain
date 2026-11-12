@@ -149,7 +149,7 @@ export async function renderAtlas() {
     h('div', {},
       h('div', { class: 'eyebrow' }, 'House style · working name'),
       h('h1', {}, 'Ink & ', h('span', {}, 'Grain')),
-      h('p', { class: 'lede' }, 'Eleven game ideas that would suit the kite-shop art style, each with its own project board, plus six bigger worlds pitched in the same style. Everything is rendered live.'),
+      h('p', { class: 'lede' }, 'Eleven game ideas that would suit the kite-shop art style, each with its own project board, plus six bigger worlds with boards of their own. Everything is rendered live.'),
       h('ul', { class: 'refs' }, ['Paralives', 'Tiny Bookshop', 'Chef Knight'].map((r) => h('li', {}, r)))),
     h('div', { class: 'frame' }, benchCv, h('span', { class: 'pill' }, 'Your kite bench, rebuilt in the shared kit'))));
 
@@ -190,7 +190,7 @@ export async function renderAtlas() {
       h('div', { class: 'frame' }, cv, h('span', { class: 'num' }, 'ABCDEF'[i]), h('span', { class: 'pill', style: 'top:auto; bottom:12px' }, W.key.caption)),
       h('div', { class: 'meta' },
         h('span', { class: 'ref' }, `Your idea: ${W.ref}`),
-        h('h3', {}, W.title),
+        h('h3', {}, URLS[W.slug] ? h('a', { href: URLS[W.slug], target: '_blank', rel: 'noopener' }, W.title) : W.title, h('a', { class: 'open', href: URLS[W.slug] ?? '#', target: '_blank', rel: 'noopener', 'aria-disabled': URLS[W.slug] ? null : 'true' }, 'Open board')),
         h('p', {}, W.logline),
         h('ul', { class: 'verdict' },
           h('li', {}, h('b', {}, 'Style fit'), h('span', {}, h('span', { class: `tag ${W.fit === 'Strong' ? 'strong' : ''}` }, W.fit), W.fitNote)),
@@ -198,7 +198,7 @@ export async function renderAtlas() {
         h('details', {}, h('summary', {}, 'Read the pitch'), h('p', {}, W.pitch)))));
     jobs.push({ cv, build: W.key.build, stage: { bg: W.key.bg, light: W.key.light }, cam: Object.assign({ yaw: -30, pitch: 32, fov: 24 }, W.key.cam) });
   });
-  wrap.append(h('section', { class: 'sec worlds' }, h('header', {}, h('h2', {}, 'Six bigger worlds'), h('p', {}, 'Your full-world ideas, each turned into an original pitch with one picture. Bigger games than the eleven above, so each one says how well the style fits and how big it would be to make.')), wgrid));
+  wrap.append(h('section', { class: 'sec worlds' }, h('header', {}, h('h2', {}, 'Six bigger worlds'), h('p', {}, 'Your full-world ideas, each turned into an original game with its own board. Bigger games than the eleven above, so each one says how well the style fits and how big it would be to make.')), wgrid));
 
   // evidence
   const fact = (b, s, small) => h('li', {}, h('b', {}, b), h('span', {}, s), small ? h('small', {}, small) : null);

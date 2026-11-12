@@ -23,10 +23,16 @@ Everything renders live in the browser with three.js, built from simple shapes. 
 | 9 | [Marshlight](https://claude.ai/artifact/H333shLL2kYX3ZquNK9xNf) | Canoe mystery in misty marsh channels | `games/marshlight.js` |
 | 10 | [Burger Joint](https://claude.ai/artifact/TFYubUezp4hQtPQCeH13Fn) | Beach burger shack, stack every order | `games/burger.js` |
 | 11 | [Fathom Nook](https://claude.ai/artifact/CJSLYXeUxKuV3EsoujBgaT) | Cosy underwater exploration, reef lamps bring the colour back | `games/fathom.js` |
+| 12 | [Hearthmarch](https://claude.ai/artifact/ENDxLU8ZzJXbvQLhKC1oJh) | Small fantasy RTS, lanterns push back a thorn forest | `games/hearthmarch.js` |
+| 13 | [Riverfold](https://claude.ai/artifact/L7UsDyLP4BqRNCnVyybSXf) | Survival city builder in a river valley | `games/riverfold.js` |
+| 14 | [Tidepool Hall](https://claude.ai/artifact/MQZmAZCYYxXgSk2xFbzQxU) | Seaside aquarium builder | `games/tidepool.js` |
+| 15 | [Saltway](https://claude.ai/artifact/K9QYT1i9rzqaDtRPGumCXN) | Coastal freight, load every crate by crane | `games/saltway.js` |
+| 16 | [Puddle Jump Air](https://claude.ai/artifact/NFQbmuzjS8R9EnnJ4LTwLs) | Island-hopping seaplane airline | `games/puddlejump.js` |
+| 17 | [Tuppenny Pier](https://claude.ai/artifact/VqtcsymCNRSCPFbzom7w13) | Run a seaside penny arcade (no real gambling) | `games/tuppenny.js` |
 
 ### Six bigger worlds (in the Atlas)
 
-Lighter pitches for full-world games, one key-art picture each, kept in `worlds.js` and shown in the Atlas under "Six bigger worlds": Hearthmarch (fantasy RTS), Riverfold (survival city builder), Tidepool Hall (aquarium), Saltway (coastal freight), Puddle Jump Air (island airline) and Tuppenny Pier (seaside arcade, no real gambling). Each says how well the style fits and how big the game is. Preview them with `worldsdev.html` (or `worldsdev.html?w=2` for one). Any of them can be grown into a full board in `games/`.
+Lighter pitches for full-world games, one key-art picture each, kept in `worlds.js` and shown in the Atlas under "Six bigger worlds": Hearthmarch (fantasy RTS), Riverfold (survival city builder), Tidepool Hall (aquarium), Saltway (coastal freight), Puddle Jump Air (island airline) and Tuppenny Pier (seaside arcade, no real gambling). Each says how well the style fits and how big the game is, and each now has a full board (12 to 17 above) that reuses the pieces exported from `worlds.js`. Preview the key art with `worldsdev.html` (or `worldsdev.html?w=2` for one).
 
 ## What's in here
 

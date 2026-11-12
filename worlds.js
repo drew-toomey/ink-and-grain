@@ -2,17 +2,17 @@
 // plus an honest note on how well the house style fits and how big the game would be to make.
 // Drew's references are genre pointers only. Every name, place and look here is original.
 import * as K from './kit.js';
-const { P, grp, box, rbox, cyl, cone, sph, cap, torus, tube, extrude, tex, texMat, deg, rng } = K;
+export const { P, grp, box, rbox, cyl, cone, sph, cap, torus, tube, extrude, tex, texMat, deg, rng } = K;
 
 // ------------------------------------------------------------ shared bits
-const log = (l = 0.9, c = P.bark) => grp(cyl(0.09, 0.09, l, c, { seg: 10 }), cyl(0.07, 0.07, 0.01, P.woodLt, { seg: 10 }).at(0, l, 0), cyl(0.07, 0.07, 0.01, P.woodLt, { seg: 10 }).at(0, -0.005, 0)).rot(0, 0, deg(90));
-const sack = (c = P.linen) => grp(sph(0.17, c, { seg: 12 }).sc(1, 1.15, 0.9).at(0, 0.17, 0), cone(0.07, 0.1, c, { seg: 8 }).at(0, 0.33, 0)).weld();
-const suitcase = (c = P.red) => grp(rbox(0.32, 0.24, 0.12, c, { r: 0.03 }), torus(0.05, 0.012, P.ink2, { arc: Math.PI, ts: 10 }).at(0, 0.24, 0));
-const stripedPole = (h, a = P.red, b = P.white) => cyl(0.05, 0.05, h, texMat(tex.stripes({ colors: [a, b], n: 6, vertical: false, rep: [1, h * 1.5] })), { seg: 10 });
+export const log = (l = 0.9, c = P.bark) => grp(cyl(0.09, 0.09, l, c, { seg: 10 }), cyl(0.07, 0.07, 0.01, P.woodLt, { seg: 10 }).at(0, l, 0), cyl(0.07, 0.07, 0.01, P.woodLt, { seg: 10 }).at(0, -0.005, 0)).rot(0, 0, deg(90));
+export const sack = (c = P.linen) => grp(sph(0.17, c, { seg: 12 }).sc(1, 1.15, 0.9).at(0, 0.17, 0), cone(0.07, 0.1, c, { seg: 8 }).at(0, 0.33, 0)).weld();
+export const suitcase = (c = P.red) => grp(rbox(0.32, 0.24, 0.12, c, { r: 0.03 }), torus(0.05, 0.012, P.ink2, { arc: Math.PI, ts: 10 }).at(0, 0.24, 0));
+export const stripedPole = (h, a = P.red, b = P.white) => cyl(0.05, 0.05, h, texMat(tex.stripes({ colors: [a, b], n: 6, vertical: false, rep: [1, h * 1.5] })), { seg: 10 });
 
 // ============================================================ 1. Hearthmarch (fantasy RTS)
-const thorn = '#5b3a5e', thornDk = '#3c2840', blight = '#7b6a86';
-function bramble(seed = 1, s = 1) {
+export const thorn = '#5b3a5e', thornDk = '#3c2840', blight = '#7b6a86';
+export function bramble(seed = 1, s = 1) {
   const r = rng(seed), g = grp();
   for (let i = 0; i < 4; i++) {
     const a = r() * 6.28, pts = [[0, 0, 0]];
@@ -22,7 +22,7 @@ function bramble(seed = 1, s = 1) {
   }
   return g.sc(s);
 }
-function thornling() {
+export function thornling() {
   const g = grp(
     sph(0.36, thornDk, { seg: 14 }).sc(1, 0.85, 0.9).at(0, 0.48, 0),
     sph(0.22, thorn, { seg: 12 }).at(0, 0.86, 0.12),
@@ -33,7 +33,7 @@ function thornling() {
   [0, 1, 2, 3, 4].forEach((i) => g.add(cone(0.04, 0.2, P.cream, { seg: 5 }).rot(deg(-30), 0, deg(-60 + i * 30)).at(-0.2 + i * 0.1, 0.78, -0.12)));
   return g;
 }
-function watchtower() {
+export function watchtower() {
   const g = grp(cyl(0.42, 0.5, 1.5, texMat(tex.bricks({ base: P.stone, mortar: P.stoneDk, rows: 10, cols: 6, rep: [2, 1] }))), cyl(0.56, 0.56, 0.12, P.woodDk).at(0, 1.5, 0));
   for (let i = 0; i < 8; i++) g.add(box(0.12, 0.2, 0.1, P.woodDk).at(Math.cos(i * 0.785) * 0.5, 1.62, Math.sin(i * 0.785) * 0.5).rot(0, -i * 0.785, 0));
   g.add(cone(0.62, 0.7, P.terracotta, { seg: 8 }).at(0, 2.1, 0), cyl(0.03, 0.03, 0.5, P.woodDk).at(0, 2.75, 0), K.flag(P.mustard, 0.5).at(0, 2.75, 0));
@@ -41,7 +41,7 @@ function watchtower() {
   g.add(box(0.36, 0.5, 0.06, P.woodDk).at(0, 0.0, 0.47));
   return g;
 }
-function hearthmarch() {
+export function hearthmarch() {
   const g = grp();
   g.add(K.ground(10.5, 6, { map: tex.speckle({ base: P.leaf, dots: [P.leafLt, P.moss], n: 160, size: 4, rep: [3, 2] }), side: P.soil, h: 0.45 }));
   // blighted ground on the right
@@ -73,12 +73,12 @@ function hearthmarch() {
 }
 
 // ============================================================ 2. Riverfold (survival city builder)
-const straw = '#d9b25a', strawDk = '#b48a3c', autumn = ['#d9772f', '#c9562f', '#e3a03a'];
-function cottage(wall = P.linen, door = P.teal) {
+export const straw = '#d9b25a', strawDk = '#b48a3c', autumn = ['#d9772f', '#c9562f', '#e3a03a'];
+export function cottage(wall = P.linen, door = P.teal) {
   const h = K.house({ w: 1.25, d: 1.0, h: 0.85, wall, roof: straw, roofH: 0.75, door, windows: 1, chimney: true, base: P.stoneDk });
   return h;
 }
-function granary() {
+export function granary() {
   const g = grp();
   [[-0.4, -0.3], [0.4, -0.3], [-0.4, 0.3], [0.4, 0.3]].forEach(([x, z]) => g.add(cyl(0.07, 0.09, 0.32, P.stone, { seg: 8 }).at(x, 0, z), cyl(0.15, 0.15, 0.05, P.stone, { seg: 10 }).at(x, 0.32, z)));
   g.add(box(1.1, 0.8, 0.9, texMat(tex.planks({ base: P.wood, line: P.woodDk, n: 6, vertical: true }))).at(0, 0.37, 0));
@@ -86,12 +86,12 @@ function granary() {
   g.add(sack().at(0.25, 0, 0.75), sack(P.cream).at(-0.05, 0, 0.8).sc(0.85));
   return g;
 }
-function wheat(w = 1.6, d = 1.0, ripe = true) {
+export function wheat(w = 1.6, d = 1.0, ripe = true) {
   const g = grp(box(w, 0.04, d, P.soil));
   for (let i = 0; i < 5; i++) g.add(box(w - 0.1, 0.22, 0.14, ripe ? P.mustard : P.leafLt).at(0, 0.04, -d / 2 + 0.12 + i * (d - 0.24) / 4));
   return g.weld();
 }
-function riverfold() {
+export function riverfold() {
   const g = grp();
   g.add(K.ground(10.5, 6, { map: tex.speckle({ base: P.olive, dots: [P.moss, '#a39a52'], n: 140, size: 4, rep: [3, 2] }), side: P.soil, h: 0.45 }));
   // river: a sunk channel on the right
@@ -120,7 +120,7 @@ function riverfold() {
 }
 
 // ============================================================ 3. Tidepool Hall (aquarium)
-function tank(w, h, d, o = {}) {
+export function tank(w, h, d, o = {}) {
   const g = grp();
   g.add(box(w + 0.16, 0.5, d + 0.16, o.base ?? P.woodDk));
   g.add(box(w, h, 0.04, K.glow('#ffffff', { map: tex.gradient([[0, o.top ?? '#a8e0e6'], [1, o.bot ?? '#3f9fb0']]) })).at(0, 0.5, -d / 2 + 0.02).noInk());
@@ -135,10 +135,10 @@ function tank(w, h, d, o = {}) {
   [-1, 1].forEach((s) => g.add(box(w + 0.16, 0.12, 0.1, P.iron).at(0, 0.5 + h, s * (d / 2 + 0.03)).noShadow(), box(0.1, 0.12, d + 0.16, P.iron).at(s * (w / 2 + 0.03), 0.5 + h, 0).noShadow()));
   return g;
 }
-function jelly(c = P.pink) {
+export function jelly(c = P.pink) {
   return grp(sph(0.16, c, { part: 'top', seg: 14 }), ...[0, 1, 2, 3].map((i) => tube([[Math.cos(i * 1.57) * 0.08, 0, Math.sin(i * 1.57) * 0.08], [Math.cos(i * 1.57) * 0.1, -0.15, Math.sin(i * 1.57) * 0.1], [Math.cos(i * 1.57) * 0.06, -0.3, Math.sin(i * 1.57) * 0.06]], 0.012, c).noInk()));
 }
-function tidepool() {
+export function tidepool() {
   const g = grp();
   g.add(K.ground(10, 5.6, { map: tex.tiles({ base: P.cream, line: P.stone, n: 8, rep: [4, 2] }), side: P.stoneDk, h: 0.35 }));
   g.add(box(10, 3.0, 0.2, '#e3d5b6').at(0, 0, -2.7));
@@ -164,9 +164,9 @@ function tidepool() {
 }
 
 // ============================================================ 4. Saltway (coastal freight)
-const cargoCols = [P.red, P.mustard, P.teal, P.blue, P.coral];
-const cargo = (c) => rbox(0.5, 0.36, 0.36, texMat(tex.planks({ base: c, line: P.ink2, n: 4, vertical: true })), { r: 0.02 });
-function coaster() {
+export const cargoCols = [P.red, P.mustard, P.teal, P.blue, P.coral];
+export const cargo = (c) => rbox(0.5, 0.36, 0.36, texMat(tex.planks({ base: c, line: P.ink2, n: 4, vertical: true })), { r: 0.02 });
+export function coaster() {
   const g = grp();
   const hull = extrude([[-2.0, 0.1], [-2.1, 0.75], [1.9, 0.75], [2.4, 0.85], [1.9, 0.0], [-1.8, 0.0]], 1.1, P.navy);
   g.add(hull, box(4.2, 0.12, 1.12, P.red).at(0.1, 0.06, 0));
@@ -182,7 +182,7 @@ function coaster() {
   g.add(K.sign('MARIGOLD', { w: 0.9, h: 0.18, bg: P.navy, fg: P.white, frame: P.navy }).at(1.0, 0.4, 0.56));
   return g;
 }
-function crane() {
+export function crane() {
   const g = grp(box(0.7, 0.2, 0.7, P.mustard), box(0.3, 2.4, 0.3, P.mustard).at(0, 0.2, 0));
   for (let i = 0; i < 6; i++) g.add(box(0.32, 0.04, 0.32, P.ink2).at(0, 0.5 + i * 0.35, 0).noInk());
   g.add(box(0.6, 0.45, 0.5, P.mustard).at(0, 2.6, 0), box(0.04, 0.25, 0.3, P.glassDk).at(0.31, 2.72, 0));
@@ -190,7 +190,7 @@ function crane() {
   g.add(cyl(0.012, 0.012, 1.3, P.ink2, { seg: 6 }).at(2.5, 1.65, 0).noInk(), cargo(P.teal).at(2.5, 1.28, 0));
   return g;
 }
-function saltway() {
+export function saltway() {
   const g = grp();
   g.add(K.ground(10.5, 6, { map: tex.waves({ base: P.sea, line: '#9ad6de', rep: [3, 2] }), side: P.seaDk, h: 0.6 }).at(0, -0.55, 0));
   // quay
@@ -217,7 +217,7 @@ function saltway() {
 }
 
 // ============================================================ 5. Puddle Jump Air (island airline)
-function propPlane(body = P.mustard, trim = P.teal, o = {}) {
+export function propPlane(body = P.mustard, trim = P.teal, o = {}) {
   const g = grp();
   g.add(cap(0.28, 2.0, body, { seg: 16 }).rot(0, 0, deg(-90)).at(-1.25, 0.6, 0));
   g.add(box(0.3, 0.04, 2.0, trim).at(0.45, 0.62, 0));
@@ -231,7 +231,7 @@ function propPlane(body = P.mustard, trim = P.teal, o = {}) {
   else { [-1, 1].forEach((s) => g.add(cyl(0.03, 0.03, 0.4, P.iron).at(0.35, 0.12, s * 0.4), K.wheel(0.13, 0.08).at(0.35, 0.13, s * 0.4))); g.add(K.wheel(0.07, 0.05).at(-1.5, 0.07, 0)); }
   return g;
 }
-function puddlejump() {
+export function puddlejump() {
   const g = grp();
   g.add(K.ground(10.5, 6.2, { map: tex.waves({ base: P.sea, line: '#9ad6de', rep: [3, 2] }), side: P.seaDk, h: 0.6 }).at(0, -0.55, 0));
   const isle = grp(K.ground(7.6, 4.4, { top: P.sand, side: P.sandDk, h: 0.25 }), box(7.0, 0.04, 3.8, texMat(tex.speckle({ base: P.leafLt, dots: [P.leaf], n: 80, size: 4, rep: [3, 2] }))).at(0, 0, 0));
@@ -258,8 +258,8 @@ function puddlejump() {
 }
 
 // ============================================================ 6. Tuppenny Pier (seaside arcade)
-const reel = (c) => grp(box(0.1, 0.12, 0.02, P.white).noInk(), sph(0.03, c, { seg: 8 }).at(0, 0.06, 0.02).noInk());
-function fruitMachine(body = P.red, trim = P.mustard) {
+export const reel = (c) => grp(box(0.1, 0.12, 0.02, P.white).noInk(), sph(0.03, c, { seg: 8 }).at(0, 0.06, 0.02).noInk());
+export function fruitMachine(body = P.red, trim = P.mustard) {
   const g = grp(rbox(0.7, 1.5, 0.55, body, { r: 0.05 }), box(0.72, 0.08, 0.57, trim).at(0, 0.7, 0));
   g.add(box(0.5, 0.26, 0.02, K.glow('#fff2c7')).at(0, 0.95, 0.28));
   [P.red, P.mustard, P.green].forEach((c, i) => g.add(reel(c).at(-0.15 + i * 0.15, 1.01, 0.3)));
@@ -269,17 +269,18 @@ function fruitMachine(body = P.red, trim = P.mustard) {
   for (let i = 0; i < 5; i++) g.add(sph(0.035, K.glow(i % 2 ? P.butter : '#ffd2a8'), { seg: 8 }).at(-0.28 + i * 0.14, 1.85, 0.2).noInk());
   return g;
 }
-function coinPusher() {
+export function coinPusher() {
   const g = grp(rbox(1.5, 1.0, 1.0, P.blue, { r: 0.06 }), box(1.52, 0.1, 1.02, P.mustard).at(0, 1.0, 0));
   g.add(box(1.3, 0.04, 0.8, P.navy).at(0, 1.1, 0));
   const r = rng(9);
   for (let i = 0; i < 26; i++) g.add(cyl(0.07, 0.07, 0.02, P.mustard, { seg: 12 }).at(-0.55 + r() * 1.1, 1.14 + (i % 3) * 0.02, -0.25 + r() * 0.6));
   g.add(box(1.3, 0.7, 0.03, K.mat(P.glass, { opacity: 0.18 })).at(0, 1.1, 0.42).noInk());
   g.add(box(1.4, 0.12, 0.9, P.mustard).at(0, 1.8, 0), box(1.2, 0.26, 0.04, K.glow('#ffe7a0')).at(0, 1.92, 0.4));
+  [-1, 1].forEach((s) => g.add(box(0.08, 0.7, 0.08, P.mustard).at(s * 0.66, 1.1, -0.38)));
   g.add(K.sign('2p', { w: 0.4, h: 0.25, bg: P.red, fg: P.white, frame: P.mustard }).at(0, 0.55, 0.51));
   return g;
 }
-function clawMachine() {
+export function clawMachine() {
   const g = grp(rbox(0.9, 0.9, 0.9, P.pink, { r: 0.05 }));
   const r = rng(4);
   for (let i = 0; i < 7; i++) g.add(sph(0.12, [P.mustard, P.sky, P.leafLt, P.white, P.coral][i % 5], { seg: 12 }).at(-0.25 + r() * 0.5, 0.98, -0.25 + r() * 0.5));
@@ -289,7 +290,7 @@ function clawMachine() {
   g.add(cyl(0.01, 0.01, 0.4, P.ink2, { seg: 6 }).at(0.1, 1.4, 0).noInk(), cone(0.08, 0.12, P.steel, { seg: 6 }).rot(deg(180), 0, 0).at(0.1, 1.4, 0));
   return g;
 }
-function tuppenny() {
+export function tuppenny() {
   const g = grp();
   g.add(K.ground(10, 5.6, { map: tex.checker({ a: '#7a2e3a', b: '#5a2230', n: 8, rep: [5, 3] }), side: P.woodDk, h: 0.35 }));
   g.add(box(10, 3.0, 0.2, '#4a3550').at(0, 0, -2.7));
