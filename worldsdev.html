@@ -1,0 +1,17 @@
+<title>Worlds dev</title>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
+<style>body{margin:0;background:#f2e8d3;display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:8px}canvas{width:100%;aspect-ratio:16/9;display:block}</style>
+<script type="module">
+// dev harness for worlds.js: worldsdev.html (all six) or ?w=2 (one)
+import * as K from './kit.js';
+import { WORLDS } from './worlds.js';
+const q = new URLSearchParams(location.search), only = q.get('w');
+const studio = new K.Studio();
+for (const [i, W] of WORLDS.entries()) {
+  if (only != null && +only !== i) continue;
+  const cv = document.createElement('canvas'); document.body.append(cv);
+  studio.attach(cv, W.key.build(), { bg: W.key.bg, light: W.key.light }, Object.assign({ yaw: -30, pitch: 32, fov: 24 }, W.key.cam));
+  await new Promise((r) => requestAnimationFrame(r));
+}
+document.body.dataset.done = '1';
+</script>

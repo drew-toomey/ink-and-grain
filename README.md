@@ -24,6 +24,10 @@ Everything renders live in the browser with three.js, built from simple shapes. 
 | 10 | [Burger Joint](https://claude.ai/artifact/TFYubUezp4hQtPQCeH13Fn) | Beach burger shack, stack every order | `games/burger.js` |
 | 11 | [Fathom Nook](https://claude.ai/artifact/CJSLYXeUxKuV3EsoujBgaT) | Cosy underwater exploration, reef lamps bring the colour back | `games/fathom.js` |
 
+### Six bigger worlds (in the Atlas)
+
+Lighter pitches for full-world games, one key-art picture each, kept in `worlds.js` and shown in the Atlas under "Six bigger worlds": Hearthmarch (fantasy RTS), Riverfold (survival city builder), Tidepool Hall (aquarium), Saltway (coastal freight), Puddle Jump Air (island airline) and Tuppenny Pier (seaside arcade, no real gambling). Each says how well the style fits and how big the game is. Preview them with `worldsdev.html` (or `worldsdev.html?w=2` for one). Any of them can be grown into a full board in `games/`.
+
 ## What's in here
 
 | Path | What it is |

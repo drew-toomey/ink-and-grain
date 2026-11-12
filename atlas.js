@@ -11,6 +11,7 @@ import warren from './games/warren.js';
 import marshlight from './games/marshlight.js';
 import burger from './games/burger.js';
 import fathom from './games/fathom.js';
+import { WORLDS } from './worlds.js';
 const { P, grp, box, cyl, cone, extrude, tube, torus, tex, texMat, deg } = K;
 
 const GAMES = [tide, barge, lost, railway, snowline, pall, nightwatch, warren, marshlight, burger, fathom];
@@ -89,6 +90,17 @@ td:first-child{font-weight:700; white-space:nowrap}
 .next span{color:var(--muted); font-size:14px}
 .foot{color:var(--muted); font-size:12.5px; border-top:2px dashed color-mix(in srgb, var(--line) 35%, transparent); padding-top:16px; display:grid; gap:6px}
 .foot a{color:var(--muted)}
+.worlds .game .num{background:var(--accent); color:#fbf5e8}
+.worlds .ref{font:700 12px/1.3 var(--f-body); letter-spacing:.06em; text-transform:uppercase; color:var(--muted)}
+.verdict{display:grid; gap:8px; margin:4px 0 0; padding:0; list-style:none}
+.verdict li{display:grid; grid-template-columns:5.6em minmax(0,1fr); gap:10px; align-items:baseline; font-size:14px}
+.verdict b{font:800 13px/1.2 var(--f-display); letter-spacing:.04em; text-transform:uppercase}
+.verdict .tag{display:inline-block; border:1.5px solid var(--line); border-radius:999px; padding:1px 9px; margin-right:6px; font:700 12px/1.4 var(--f-body); background:var(--chip)}
+.verdict .tag.strong{background:#3f8a6b; color:#fbf5e8}
+.verdict .dots{letter-spacing:2px; margin-right:6px; font-weight:800; color:var(--accent)}
+.worlds details{font-size:14px; color:var(--muted)}
+.worlds summary{cursor:pointer; font-weight:700; color:var(--ink)}
+.worlds details p{margin:6px 0 0}
 @media (max-width: 1020px){ .rules{grid-template-columns:repeat(2, minmax(0,1fr))} .rules li:last-child{grid-column:1/-1} .hero{grid-template-columns:minmax(0,1fr)} .mono{grid-template-columns:minmax(0,1fr)} .next{grid-template-columns:minmax(0,1fr)} }
 @media (max-width: 720px){ .games{grid-template-columns:minmax(0,1fr)} .two{grid-template-columns:minmax(0,1fr)} .rules{grid-template-columns:minmax(0,1fr)} }
 @media (max-width: 440px){ .facts li{grid-template-columns:minmax(0,1fr)} .facts small{grid-column:1} }
@@ -137,7 +149,7 @@ export async function renderAtlas() {
     h('div', {},
       h('div', { class: 'eyebrow' }, 'House style · working name'),
       h('h1', {}, 'Ink & ', h('span', {}, 'Grain')),
-      h('p', { class: 'lede' }, 'Eleven game ideas that would suit the kite-shop art style. Each one has a project board with characters, buildings, vehicles and environments, all rendered live in the same style.'),
+      h('p', { class: 'lede' }, 'Eleven game ideas that would suit the kite-shop art style, each with its own project board, plus six bigger worlds pitched in the same style. Everything is rendered live.'),
       h('ul', { class: 'refs' }, ['Paralives', 'Tiny Bookshop', 'Chef Knight'].map((r) => h('li', {}, r)))),
     h('div', { class: 'frame' }, benchCv, h('span', { class: 'pill' }, 'Your kite bench, rebuilt in the shared kit'))));
 
@@ -168,6 +180,25 @@ export async function renderAtlas() {
     jobs.push({ cv, build: G.key.build, stage: { ...mono, bg: G.key.bg ?? G.theme?.cardBg ?? P.cream, light: G.key.light, sun: G.key.sun }, cam: Object.assign({ yaw: -34, pitch: 30, fov: 26 }, G.key.cam) });
   });
   wrap.append(h('section', { class: 'sec' }, h('header', {}, h('h2', {}, 'The eleven games'), h('p', {}, 'Drag any picture to turn it. Each board opens in its own page.')), grid));
+
+
+  // six bigger worlds (Nov 2026): lighter pitches, one picture each
+  const wgrid = h('div', { class: 'games' });
+  WORLDS.forEach((W, i) => {
+    const cv = h('canvas', { role: 'img', 'aria-label': `${W.title} key art. Drag to turn.` });
+    wgrid.append(h('article', { class: 'game' },
+      h('div', { class: 'frame' }, cv, h('span', { class: 'num' }, 'ABCDEF'[i]), h('span', { class: 'pill', style: 'top:auto; bottom:12px' }, W.key.caption)),
+      h('div', { class: 'meta' },
+        h('span', { class: 'ref' }, `Your idea: ${W.ref}`),
+        h('h3', {}, W.title),
+        h('p', {}, W.logline),
+        h('ul', { class: 'verdict' },
+          h('li', {}, h('b', {}, 'Style fit'), h('span', {}, h('span', { class: `tag ${W.fit === 'Strong' ? 'strong' : ''}` }, W.fit), W.fitNote)),
+          h('li', {}, h('b', {}, 'Size'), h('span', {}, h('span', { class: 'dots', 'aria-label': `${W.size} out of 5` }, '●'.repeat(W.size) + '○'.repeat(5 - W.size)), W.sizeNote))),
+        h('details', {}, h('summary', {}, 'Read the pitch'), h('p', {}, W.pitch)))));
+    jobs.push({ cv, build: W.key.build, stage: { bg: W.key.bg, light: W.key.light }, cam: Object.assign({ yaw: -30, pitch: 32, fov: 24 }, W.key.cam) });
+  });
+  wrap.append(h('section', { class: 'sec worlds' }, h('header', {}, h('h2', {}, 'Six bigger worlds'), h('p', {}, 'Your full-world ideas, each turned into an original pitch with one picture. Bigger games than the eleven above, so each one says how well the style fits and how big it would be to make.')), wgrid));
 
   // evidence
   const fact = (b, s, small) => h('li', {}, h('b', {}, b), h('span', {}, s), small ? h('small', {}, small) : null);
